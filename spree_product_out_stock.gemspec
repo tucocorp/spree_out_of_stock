@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_product_out_stock'
-  s.version     = '3.1.4'
+  s.version     = '3.1-stable'
   s.summary     = 'Extension to view all products out of range'
   s.description = s.summary
   s.required_ruby_version = '>= 2.1.0'
