@@ -1,0 +1,9 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+  sales_total: "sales total"
+  sales_total_description: "Sales Totals"
+  out_of_stock: "Products out stock"
+  out_of_stock_description: "This are products out stock"
