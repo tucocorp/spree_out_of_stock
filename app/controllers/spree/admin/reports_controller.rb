@@ -4,8 +4,8 @@ module Spree
       respond_to :html
 
       AVAILABLE_REPORTS = {
-        :sales_total => { :name => I18n.t(:sales_total), :description => I18n.t(:sales_total_description) },
-        :out_of_stock => { :name => I18n.t(:out_of_stock), :description => I18n.t(:out_of_stock_description) }
+        :sales_total => { :name => "sales total", :description =>"Sales Totals" },
+        :out_of_stock => { :name => "Products out stock", :description => "This are products out stock" }
       }
 
       def index
