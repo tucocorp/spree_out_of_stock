@@ -4,8 +4,8 @@ module Spree
       respond_to :html
 
       AVAILABLE_REPORTS = {
-        :sales_total => { :name => I18n.t(:sales_total), :description => I18n.t(:sales_total_description) },
-        :out_of_stock => { :name => I18n.t(:out_of_stock), :description => I18n.t(:out_of_stock_description) }
+        :sales_total => { :name => "sales total", :description =>"Sales Totals" },
+        :out_of_stock => { :name => "Products out stock", :description => "This are products out stock" }
       }
 
       def index
@@ -48,21 +48,23 @@ module Spree
 
       def out_of_stock
         params[:q] = {} unless params[:q]
+        if params[:q] && !params[:q][:updated_at_gt].blank?
+          params[:q][:updated_at_gt] = Time.zone.parse(params[:q][:updated_at_gt]).beginning_of_day rescue ""
+        end
 
-        if params[:q][:created_at].blank?
-          params[:q][:created_at] = Time.zone.now.beginning_of_month
+        if params[:q] && !params[:q][:updated_at_lt].blank?
+          params[:q][:updated_at_lt] = Time.zone.parse(params[:q][:updated_at_lt]).end_of_day rescue ""
+        end
+
+        params[:q][:s] ||= "updated_at desc"
+        @search = Variant.ransack(params[:q])
+        if params[:q][:updated_at_gt].present?
+          @variants = Variant.includes(:stock_items).where("spree_stock_items.count_on_hand = 0").references(:spree_stock_items).where("spree_variants.updated_at >= ?", params[:q][:updated_at_gt])
         else
-          params[:q][:created_at] = Time.zone.parse(params[:q][:created_at]).beginning_of_day rescue Time.zone.now.beginning_of_month
+          @variants = Variant.includes(:stock_items).where("spree_stock_items.count_on_hand = 0").references(:spree_stock_items)
         end
-
-        if params[:q] && !params[:q][:created_at].blank?
-          params[:q][:created_at] = Time.zone.parse(params[:q][:created_at]).end_of_day rescue ""
-        end
-
-        @search = Product.joins(:variants_including_master).ransack(params[:q])
-        @products = @search.result
+        @variants = @variants.where("spree_variants.updated_at <= ?", params[:q][:updated_at_lt]) if params[:q][:updated_at_lt].present?
       end
-
     end
   end
 end

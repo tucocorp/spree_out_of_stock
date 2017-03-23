@@ -1,26 +1,42 @@
 <% content_for :page_title do %>
-  <%= link_to Spree.t(:reports), spree.admin_reports_url %> /
-  <%= Spree.t(:out_of_stock) %>
+  <%= link_to "reports", spree.admin_reports_url %> /
+  <%= "products out of stock" %>
 <% end %>
 
 <div class="well">
-  <%= render partial: 'spree/admin/shared/report_order_criteria' %>
+  <%= search_form_for @search, :url => spree.out_of_stock_admin_reports_path  do |s| %>
+  <div class="form-group date-range-filter">
+    <%= label_tag nil, Spree.t(:date_range) %>
+    <div class="date-range-filter row">
+      <div class="col-md-6">
+        <%= s.text_field :updated_at_gt, :class => 'datepicker datepicker-from form-control', :value => datepicker_field_value(params[:q][:updated_at_gt]) %>
+      </div>
+      <div class="col-md-6">
+        <%= s.text_field :updated_at_lt, :class => 'datepicker datepicker-to form-control', :value => datepicker_field_value(params[:q][:updated_at_lt]) %>
+    </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= button Spree.t(:search), 'search' %>
+  </div>
+  <% end %>
 </div>
 
-<table class="table table-bordered admin-report" data-hook="out_of_stock">
+<table class="table table-bordered admin-report" data-hook="products_ran_out_of_stock">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>NAME</th>
-      <th>DESCRIPTION</th>
+      <th><%= Spree.t(:sku) %></th>
+      <th><%= Spree.t(:name) %></th>
+      <th><%= Spree.t(:ran_out_of_stock) %></th>
     </tr>
   </thead>
   <tbody>
-    <% @products.each do |key, row| %>
+    <% @variants.each do |variant| %>
       <tr>
-        <td><%= key.id %></td>
-        <td><%= key.name %></td>
-        <td><%= key.description %></td>
+        <td><%= variant.sku %></td>
+        <td><%= variant.descriptive_name %></td>
+        <td><%= variant.updated_at.strftime("%Y/%m/%d") %></td>
       </tr>
     <% end %>
   </tbody>
