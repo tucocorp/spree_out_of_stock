@@ -5,7 +5,7 @@ module Spree
 
       AVAILABLE_REPORTS = {
         :sales_total => { :name => "sales total", :description =>"Sales Totals" },
-        :out_of_stock => { :name => "Products out stock", :description => "This are products out stock" }
+        :out_of_stock => { :name => "Products ran out of stock", :description => "This are all products ran out of stock" }
       }
 
       def index
