@@ -1,6 +1,4 @@
 Spree::Core::Engine.routes.draw do
-    get "/out_of_stock" => "products#out_of_stock"
-
     namespace :admin do
       resources :reports, :only => [:index, :show] do  # <= add this block
         collection do
