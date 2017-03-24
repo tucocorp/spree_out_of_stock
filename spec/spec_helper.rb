@@ -30,7 +30,7 @@ require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/url_helpers'
 
-# Requires factories defined in lib/spree_product_out_stock/factories.rb
+# Requires factories defined in lib/spree_simple_sales/factories.rb
 require 'spree_product_out_stock/factories'
 
 RSpec.configure do |config|
