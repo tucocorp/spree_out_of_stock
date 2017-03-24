@@ -1,31 +1,30 @@
 SpreeProductOutStock
 ====================
 
-Introduction goes here.
+This spree extension was created for technical test from a developer's job
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
   ```ruby
-  gem 'spree_product_out_stock', github: '[your-github-handle]/spree_product_out_stock', branch: 'X-X-stable'
+  gem 'spree_product_out_stock', github: 'tucocorp/spree_product_out_stock', branch: '3.1-stable'
   ```
-
   The `branch` option is important: it must match the version of Spree you're using.
-  For example, use `3-1-stable` if you're using Spree `3-1-stable` or any `3.1.x` version.
+  For example, use `3-1-stable` if you're using Spree `3-1-x` version.
 
 2. Install the gem using Bundler:
   ```ruby
   bundle install
   ```
-
-3. Copy & run migrations
-  ```ruby
-  bundle exec rails g spree_product_out_stock:install
-  ```
-
-4. Restart your server
+3. Restart your server
 
   If your server was running, restart it so that it can find the assets properly.
+
+4. Now you can go to you_root_path:3000/admin (Ex: localhost:3000/admin) and Enter your access key.
+
+5. Finally go to reports > Products ran out of stock report. if you see, you would select the range of date from products ran out of stock
+
+NOTE: If you are trying to see the products and you have default spree setting, you must have to change the stock from products, because all the products have stock > 0.
 
 ## Testing
 
@@ -42,12 +41,3 @@ Simply add this require statement to your spec_helper:
 ```ruby
 require 'spree_product_out_stock/factories'
 ```
-
-
-## Contributing
-
-If you'd like to contribute, please take a look at the
-[instructions](CONTRIBUTING.md) for installing dependencies and crafting a good
-pull request.
-
-Copyright (c) 2017 [name of extension creator], released under the New BSD License
