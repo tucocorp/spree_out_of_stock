@@ -31,12 +31,9 @@ module Spree
         else
           params[:q][:completed_at_not_null] = false
         end
-
         params[:q][:s] ||= "created_at desc"
-
         @search = Order.complete.ransack(params[:q])
         @orders = @search.result
-
         @totals = {}
         @orders.each do |order|
           @totals[order.currency] = { :item_total => ::Money.new(0, order.currency), :adjustment_total => ::Money.new(0, order.currency), :sales_total => ::Money.new(0, order.currency) } unless @totals[order.currency]
@@ -51,18 +48,13 @@ module Spree
         if params[:q] && !params[:q][:updated_at_gt].blank?
           params[:q][:updated_at_gt] = Time.zone.parse(params[:q][:updated_at_gt]).beginning_of_day rescue ""
         end
-
         if params[:q] && !params[:q][:updated_at_lt].blank?
           params[:q][:updated_at_lt] = Time.zone.parse(params[:q][:updated_at_lt]).end_of_day rescue ""
         end
-
         params[:q][:s] ||= "updated_at desc"
         @search = Variant.ransack(params[:q])
-        if params[:q][:updated_at_gt].present?
-          @variants = Variant.includes(:stock_items).where("spree_stock_items.count_on_hand = 0").references(:spree_stock_items).where("spree_variants.updated_at >= ?", params[:q][:updated_at_gt])
-        else
-          @variants = Variant.includes(:stock_items).where("spree_stock_items.count_on_hand = 0").references(:spree_stock_items)
-        end
+        @variants = Variant.includes(:stock_items).where("spree_stock_items.count_on_hand = 0").references(:spree_stock_items)
+        @variants = @variants.where("spree_variants.updated_at >= ?", params[:q][:updated_at_gt]) if params[:q][:updated_at_gt].present?
         @variants = @variants.where("spree_variants.updated_at <= ?", params[:q][:updated_at_lt]) if params[:q][:updated_at_lt].present?
       end
     end
