@@ -1,4 +1,4 @@
-SpreeProductOutStock
+Spree Product Ran Out Stock
 ====================
 
 This spree extension was created for technical test from a developer's job
@@ -14,17 +14,17 @@ This spree extension was created for technical test from a developer's job
 
 2. Install the gem using Bundler:
   ```ruby
-  bundle install
+    bundle install
   ```
-3. Restart your server
-
-  If your server was running, restart it so that it can find the assets properly.
+3. Restart your server. If your server was running, restart it so that it can find the assets properly.
 
 4. Now you can go to you_root_path:3000/admin (Ex: localhost:3000/admin) and Enter your access key.
 
 5. Finally go to reports > Products ran out of stock report. if you see, you would select the range of date from products ran out of stock
 
-NOTE: If you are trying to see the products and you have default spree setting, you must have to change the stock from products, because all the products have stock > 0.
+```ruby
+  NOTE: If you are trying to see the products and you have default spree setting, you must have to change the stock from products, because all the products have stock > 0.
+```
 
 ## Testing
 
